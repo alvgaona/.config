@@ -1,4 +1,13 @@
+# Ignore everything by default
 *
-!nvim/*
-!zed/*
+
+# Tracked directories
+!nvim/
+!nvim/**
+!zed/
+!zed/**
+
+# Tracked files
+!.gitignore
+!LICENSE
 !starship.toml
