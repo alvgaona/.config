@@ -1,0 +1,132 @@
+{
+    "assistant": {
+        "default_model": {
+            "model": "claude-3-5-sonnet-latest",
+            "provider": "zed.dev"
+        },
+        "dock": "left",
+        "version": "2"
+    },
+    "autosave": "on_focus_change",
+    "buffer_font_size": 15,
+    "cursor_blink": false,
+    "experimental.theme_overrides": {
+        "background": "#101010ee",
+        "background.appearance": "blurred",
+        "border.variant": "#101010ee",
+        "editor.active_line.background": "#101010ee",
+        "editor.background": "#10101000",
+        "editor.gutter.background": "#101010ee",
+        "panel.background": "#10101000",
+        "scrollbar.track.border": "#101010ee",
+        "status_bar.background": "#101010d",
+        "tab.active_background": "#28282820",
+        "tab.inactive_background": "#00000000",
+        "tab_bar.background": "#10101000",
+        "terminal.background": "#10101000",
+        "title_bar.background": "#101010ee",
+        "toolbar.background": "#10101000"
+    },
+    "format_on_save": "on",
+    "formatter": "language_server",
+    "languages": {
+        "YAML": {
+            "format_on_save": "on",
+            "tab_size": 2
+        },
+        "TOML": {
+            "format_on_save": "on",
+            "tab_size": 2
+        },
+        "TSX": {
+            "format_on_save": "on",
+            "tab_size": 2
+        },
+        "TypeScript": {
+            "format_on_save": "on",
+            "tab_size": 2
+        },
+        "JavaScript": {
+            "format_on_save": "on",
+            "tab_size": 2
+        },
+        "Python": {
+            "format_on_save": "on",
+            "formatter": [
+                {
+                    "language_server": {
+                        "name": "pyright"
+                    }
+                },
+                {
+                    "code_actions": {
+                        "source.fixAll.ruff": true,
+                        "source.organizeImports.ruff": true
+                    }
+                },
+                {
+                    "language_server": {
+                        "name": "ruff"
+                    }
+                }
+            ]
+        }
+    },
+    "lsp": {
+        "pyright": {
+            "settings": {
+                "python": {
+                    "pythonPath": "/home/alvaro/.pyenv/shims/python"
+                },
+                "python.analysis": {
+                    "diagnosticMode": "workspace",
+                    "typeCheckingMode": "strict"
+                }
+            }
+        },
+        "ruff": {
+            "initialization_options": {
+                "settings": {
+                    "lineLength": 80,
+                    "lint": {
+                        "extendSelect": [
+                            "I"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "preferred_line_length": 120,
+    "prettier": {
+        "allowed": true
+    },
+    "project_panel": {
+        "dock": "right"
+    },
+    "relative_line_numbers": true,
+    "scroll_beyond_last_line": "off",
+    "scrollbar": {
+        "show": "never"
+    },
+    "tab_size": 4,
+    "tabs": {
+        "file_icons": true
+    },
+    "terminal": {
+        "alternate_scroll": "off",
+        "blinking": "on",
+        "copy_on_select": true,
+        "option_as_meta": false,
+        "toolbar": {
+            "title": true
+        }
+    },
+    "theme": "Vesper",
+    "ui_font_size": 16,
+    "vertical_scroll_margin": 0,
+    "vim": {
+        "use_system_clipboard": "on_yank"
+    },
+    "vim_mode": true
+}
