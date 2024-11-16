@@ -1,9 +1,4 @@
-# LazyVim
-lazy-lock.json
-
-# Zed
-zed/conversations/
-zed/embeddings/
-zed/.tmp*
-zed/themes/
-zed/prompts
+*
+!nvim/*
+!zed/*
+!starship.toml
