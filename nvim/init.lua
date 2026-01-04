@@ -4,7 +4,7 @@ require("config.lazy")
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 1
 vim.g.netrw_winsize = 50
-vim.g.netrw_browse_split = 4
+vim.g.netrw_browse_split = 0
 vim.g.netrw_altv = 1
 vim.g.netrw_keepdir = 0
 
@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
   nested = true,
   callback = function()
     if vim.fn.argc() == 0 then
-      vim.cmd("Explore")
+      vim.cmd(":Dired")
     end
   end,
 })
