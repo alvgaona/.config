@@ -23,10 +23,24 @@
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; Modeline
-(setq mode-line-position
-      '((line-number-mode
-         ("%l" (column-number-mode ":%c"))))) ;; Remove scroll percentage
+;; Modeline - Place line/column numbers on the right
+;; Hide mode name, only show process when it exists
+(setq-default mode-line-modes nil)
+
+(setq-default mode-line-format
+              '("%e"
+                mode-line-front-space
+                mode-line-mule-info
+                mode-line-client
+                mode-line-modified
+                mode-line-remote
+                "   "
+                mode-line-modes
+                mode-line-misc-info
+                (:eval (propertize " " 'display '(space :align-to (- right 10))))
+                (line-number-mode
+                 ("%l" (column-number-mode ":%c")))
+                mode-line-end-spaces))
 
 ;; Theme
 (use-package gruber-darker-theme

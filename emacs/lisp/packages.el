@@ -56,6 +56,11 @@
 ;; Markdown
 (use-package markdown-mode)
 
+;; Ripgrep
+(use-package rg
+  :config
+  (rg-enable-default-bindings))
+
 ;; Pixi
 (use-package pixi
   :load-path "~/git/pixi.el"
