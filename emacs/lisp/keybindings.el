@@ -54,9 +54,12 @@
 (global-set-key (kbd "s-o") 'find-file)
 
 ;; Window management
-(global-set-key (kbd "s-,") 'split-window-below)
-(global-set-key (kbd "s-.") 'split-window-right)
+(global-set-key (kbd "s-,") (lambda () (interactive) (split-window-below) (other-window 1)))
+(global-set-key (kbd "s-.") (lambda () (interactive) (split-window-right) (other-window 1)))
 (global-set-key (kbd "s-w") 'delete-window)
+
+;; Command execution
+(global-set-key (kbd "M-;") 'execute-extended-command)
 
 ;; Commenting
 (global-set-key (kbd "s-/") 'comment-line)

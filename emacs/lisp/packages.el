@@ -1,5 +1,18 @@
 ;;; packages.el --- Package configuration -*- lexical-binding: t -*-
 
+;; Dashboard
+(use-package dashboard
+  :config
+  (setq dashboard-banner-logo-title "")
+  (setq dashboard-show-banner nil)
+  (setq dashboard-init-info "")
+  (setq dashboard-footer-messages '(""))
+  (dashboard-setup-startup-hook)
+  :custom
+  (dashboard-center-content t)
+  (dashboard-vertically-center-content t)
+  (dashboard-items '((recents . 10))))
+
 ;; Diminish
 (use-package diminish)
 
@@ -64,12 +77,19 @@
 ;; Pixi
 (use-package pixi
   :load-path "~/git/pixi.el"
-  :config
-  (setq pixi-auto-activate t))
+  :custom
+  (pixi-auto-activate t)
+  (pixi-modeline-show-project nil)
+  (pixi-modeline-show-environment nil))
 
 ;; ROS2
 (use-package ros2
-  :load-path "~/git/ros2.el")
+  :load-path "~/git/ros2.el"
+  :custom
+  (ros2-modeline-show-icon nil)
+  (ros2-modeline-prefix nil)
+  (ros2-modeline-show-distro t)
+  (ros2-modeline-show-workspace nil))
 
 (provide 'packages)
 ;;; packages.el ends here

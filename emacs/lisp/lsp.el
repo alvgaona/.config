@@ -16,6 +16,9 @@
          (tsx-ts-mode . eglot-ensure)
          (astro-ts-mode . eglot-ensure))
   :config
+  (setq eglot-report-progress nil)
+  (setq eglot--mode-line-format '(""))
+  (setq flymake-mode-line-format '(""))
   (add-to-list 'eglot-ignored-server-capabilities :inlayHintProvider)
   (add-to-list 'eglot-server-programs
                `(astro-ts-mode . ("astro-ls" "--stdio"
