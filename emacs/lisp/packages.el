@@ -13,6 +13,35 @@
   (dashboard-vertically-center-content t)
   (dashboard-items '((recents . 10))))
 
+;; Vertico (completion UI)
+(use-package vertico
+  :init
+  (vertico-mode))
+
+;; Orderless (fuzzy matching)
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil))
+
+;; Marginalia (annotations in minibuffer)
+(use-package marginalia
+  :init
+  (marginalia-mode))
+
+;; Consult (enhanced commands)
+(use-package consult
+  :bind (("C-s" . consult-line)           ; Search in buffer
+         ("C-x b" . consult-buffer)        ; Better buffer switch
+         ("M-g g" . consult-goto-line)     ; Go to line
+         ("M-s r" . consult-ripgrep)))     ; Search in project
+
+;; Consult-lsp (LSP symbol search)
+(use-package consult-lsp
+  :after (consult lsp-mode)
+  :bind (:map lsp-mode-map
+              ("M-s s" . consult-lsp-symbols)))  ; Search symbols in project
+
 ;; Diminish
 (use-package diminish)
 

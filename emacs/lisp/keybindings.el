@@ -61,6 +61,32 @@
 ;; Command execution
 (global-set-key (kbd "M-;") 'execute-extended-command)
 
+;; Browser
+(defun my-xwidget-browse-url (url)
+  "Browse URL with xwidget-webkit, defaulting to localhost:4321."
+  (interactive
+   (list (read-string "URL: " "http://localhost:4321")))
+  (xwidget-webkit-browse-url url))
+
+(global-set-key (kbd "s-\"") 'my-xwidget-browse-url)
+
+;; Update frame title based on current buffer
+(defun my-update-frame-title ()
+  "Update frame title based on current buffer type."
+  (if (eq major-mode 'xwidget-webkit-mode)
+      (let* ((session (xwidget-webkit-current-session))
+             (title (or (xwidget-webkit-title session) ""))
+             (url (or (xwidget-webkit-uri session) "")))
+        (if (string-empty-p title)
+            (set-frame-parameter nil 'title url)
+          (set-frame-parameter nil 'title (format "%s %s" url title))))
+    (set-frame-parameter nil 'title (buffer-name))))
+
+(add-hook 'buffer-list-update-hook #'my-update-frame-title)
+(add-hook 'xwidget-webkit-mode-hook
+          (lambda ()
+            (run-with-timer 1 nil #'my-update-frame-title)))
+
 ;; Commenting
 (global-set-key (kbd "s-/") 'comment-line)
 
