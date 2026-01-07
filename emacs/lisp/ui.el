@@ -25,10 +25,32 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Modeline (lualine-style) - Pure elisp
+;; Single modeline: only the active window shows the modeline
 
 ;; Modeline inherits font from default face + scales with zoom
 (set-face-attribute 'mode-line nil :inherit 'default :box '(:line-width 4 :style flat-button))
 (set-face-attribute 'mode-line-inactive nil :inherit 'default :box '(:line-width 4 :style flat-button))
+
+;; Hide modeline on inactive windows using window-local mode-line-format
+(defvar my-modeline-format nil
+  "Storage for the actual modeline format.")
+
+(defun my-modeline-update-windows ()
+  "Show modeline only on the selected window."
+  (let ((current (selected-window)))
+    (dolist (window (window-list))
+      (set-window-parameter window 'mode-line-format
+                            (if (eq window current)
+                                my-modeline-format
+                              'none))))
+  (force-mode-line-update t))
+
+;; Update modeline on window focus change (Emacs 27+)
+(add-hook 'window-selection-change-functions
+          (lambda (_frame) (my-modeline-update-windows)))
+
+;; Update modeline when window configuration changes (split/delete/create)
+(add-hook 'window-configuration-change-hook #'my-modeline-update-windows)
 
 (defun my-modeline-scale-with-zoom ()
   "Scale modeline with text-scale zoom."
@@ -184,22 +206,28 @@ Each function should return a propertized string or nil.")
     (propertize " " 'display `(space :align-to (- right ,width)))))
 
 ;; Build the mode-line
-(setq-default mode-line-format
-              '((:eval (my-modeline-segment-branch))
-                (:eval (my-modeline-segment-sep-ab))
-                (:eval (my-modeline-segment-filename))
-                (:eval (my-modeline-segment-sep-b))
-                (:eval (my-modeline-render-extra-left))
-                (:eval (my-modeline-segment-misc-info))
-                (:eval (my-modeline-right-align))
-                (:eval (my-modeline-render-extra-right))
-                (:eval (my-modeline-segment-sep-c))
-                (:eval (my-modeline-segment-percent))
-                (:eval (my-modeline-segment-sep-cb))
-                (:eval (my-modeline-segment-linecol))
-                (:eval (my-modeline-segment-sep-ba))
-                (:eval (my-modeline-segment-time))
-                (:eval (my-modeline-segment-fill-right))))
+(setq my-modeline-format
+      '((:eval (my-modeline-segment-branch))
+        (:eval (my-modeline-segment-sep-ab))
+        (:eval (my-modeline-segment-filename))
+        (:eval (my-modeline-segment-sep-b))
+        (:eval (my-modeline-render-extra-left))
+        (:eval (my-modeline-segment-misc-info))
+        (:eval (my-modeline-right-align))
+        (:eval (my-modeline-render-extra-right))
+        (:eval (my-modeline-segment-sep-c))
+        (:eval (my-modeline-segment-percent))
+        (:eval (my-modeline-segment-sep-cb))
+        (:eval (my-modeline-segment-linecol))
+        (:eval (my-modeline-segment-sep-ba))
+        (:eval (my-modeline-segment-time))
+        (:eval (my-modeline-segment-fill-right))))
+
+;; Initialize modeline
+(setq-default mode-line-format my-modeline-format)
+
+;; Ensure modeline is set after init
+(add-hook 'emacs-startup-hook #'my-modeline-update-windows)
 
 ;; Theme
 (use-package gruber-darker-theme
