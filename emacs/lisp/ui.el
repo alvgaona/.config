@@ -35,14 +35,24 @@
 (defvar my-modeline-format nil
   "Storage for the actual modeline format.")
 
+(defvar my-modeline-hidden-modes '(compilation-mode
+                                   magit-status-mode
+                                   magit-log-mode
+                                   magit-diff-mode
+                                   magit-revision-mode)
+  "Major modes where modeline should never be shown.")
+
 (defun my-modeline-update-windows ()
-  "Show modeline only on the selected window."
+  "Show modeline only on the selected window, unless in a hidden mode."
   (let ((current (selected-window)))
     (dolist (window (window-list))
-      (set-window-parameter window 'mode-line-format
-                            (if (eq window current)
-                                my-modeline-format
-                              'none))))
+      (let ((dominated (with-current-buffer (window-buffer window)
+                         (memq major-mode my-modeline-hidden-modes))))
+        (set-window-parameter window 'mode-line-format
+                              (cond
+                               (dominated 'none)
+                               ((eq window current) my-modeline-format)
+                               (t 'none))))))
   (force-mode-line-update t))
 
 ;; Update modeline on window focus change (Emacs 27+)
@@ -155,8 +165,8 @@ Each function should return a propertized string or nil.")
          (total (line-number-at-pos (point-max)))
          (percent (if (= total 1) 0 (/ (* 100 current) total)))
          (text (cond
-                ((<= percent 0) "Top")
-                ((>= percent 100) "Bottom")
+                ((= current 1) "Top")
+                ((>= current total) "Bottom")
                 (t (format "%d%%%%" percent)))))
     (propertize (format " %s " text) 'face 'my-modeline-section-c)))
 

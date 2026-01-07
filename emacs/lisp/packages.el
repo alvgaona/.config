@@ -1,5 +1,13 @@
 ;;; packages.el --- Package configuration -*- lexical-binding: t -*-
 
+;; Dimmer (dim inactive windows)
+(use-package dimmer
+  :config
+  (setq dimmer-fraction 0.5)
+  (dimmer-configure-which-key)
+  (dimmer-configure-magit)
+  (dimmer-mode t))
+
 ;; Dashboard
 (use-package dashboard
   :config
@@ -93,7 +101,20 @@
   :config
   (setq compilation-scroll-output t)
   (setq compilation-ask-about-save nil)
-  (setq compilation-always-kill t))
+  (setq compilation-always-kill t)
+  ;; Focus compilation buffer when it appears
+  (defun my-focus-compilation-buffer (buffer msg)
+    (when-let ((win (get-buffer-window buffer)))
+      (select-window win)
+      (when (fboundp 'dimmer-process-all)
+        (dimmer-process-all))))
+  (add-hook 'compilation-finish-functions #'my-focus-compilation-buffer)
+  (add-to-list 'display-buffer-alist
+               '("\\*compilation\\*"
+                 (display-buffer-in-side-window)
+                 (side . bottom)
+                 (window-height . 0.3)))
+)
 
 ;; Markdown
 (use-package markdown-mode)

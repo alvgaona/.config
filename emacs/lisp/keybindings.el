@@ -44,9 +44,12 @@
 (global-set-key (kbd "TAB") 'indent-region-or-line)
 (global-set-key (kbd "<backtab>") 'unindent-region-or-line)
 
+;; Window (pane) navigation
+(global-set-key (kbd "s-]") 'other-window)
+(global-set-key (kbd "s-[") (lambda () (interactive) (other-window -1)))
+
 ;; Buffer navigation
-(global-set-key (kbd "s-]") 'next-buffer)
-(global-set-key (kbd "s-[") 'previous-buffer)
+(global-set-key (kbd "s-'") 'next-buffer)
 (global-set-key (kbd "s-g") 'beginning-of-buffer)
 (global-set-key (kbd "s-G") 'end-of-buffer)
 
@@ -54,12 +57,15 @@
 (global-set-key (kbd "s-o") 'find-file)
 
 ;; Window management
-(global-set-key (kbd "s-,") (lambda () (interactive) (split-window-below) (other-window 1)))
-(global-set-key (kbd "s-.") (lambda () (interactive) (split-window-right) (other-window 1)))
+(global-set-key (kbd "s-,") (lambda () (interactive) (split-window-below) (other-window 1) (dired default-directory)))
+(global-set-key (kbd "s-.") (lambda () (interactive) (split-window-right) (other-window 1) (dired default-directory)))
 (global-set-key (kbd "s-w") 'delete-window)
 
 ;; Command execution
 (global-set-key (kbd "M-;") 'execute-extended-command)
+
+;; Quit Emacs
+(global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
 
 ;; Browser
 (defun my-xwidget-browse-url (url)
@@ -93,6 +99,7 @@
 ;; Editing
 (global-set-key (kbd "s-;") 'duplicate-line-or-region)
 (global-set-key (kbd "s-<backspace>") 'backward-kill-word)
+(global-set-key (kbd "s-S-<backspace>") 'kill-whole-line)
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
 (global-set-key (kbd "s-d") 'mc/mark-next-like-this)
@@ -114,6 +121,16 @@
 
 (global-set-key (kbd "M-S-<right>") 'select-forward-word)
 (global-set-key (kbd "M-S-<left>") 'select-backward-word)
+
+;; Fast vertical movement (5 lines at a time)
+(global-set-key (kbd "s-<up>") (lambda () (interactive) (forward-line -5)))
+(global-set-key (kbd "s-<down>") (lambda () (interactive) (forward-line 5)))
+
+;; Word movement
+(global-set-key (kbd "s-<left>") 'backward-word)
+(global-set-key (kbd "s-<right>") 'forward-word)
+
+
 
 (provide 'keybindings)
 ;;; keybindings.el ends here
